@@ -119,6 +119,7 @@ const App = () => {
                     setLoggedIn(true);
                     setUserEmail(email);
                     localStorage.setItem('jwt', res.token);
+                    api.setPassword(res.token);
                     history.push('/');
                 } else {
                     setInfoTooltip(true);
