@@ -4,6 +4,10 @@ export class Api {
         this._url = url;
     }
 
+    setPassword(password) {
+        this._password = password;
+    }
+
     setUserInfo(name, about) {
         return this._patchRequest('/users/me', {
             name,
@@ -52,7 +56,7 @@ export class Api {
         return this._request(url, {
             method: 'DELETE',
             headers: {
-                authorization: this._password
+                'Authorization': `Bearer ${this._password}`,
             },
         });
     }
@@ -61,7 +65,7 @@ export class Api {
         return this._request(url, {
             method: 'PUT',
             headers: {
-                authorization: this._password
+                'Authorization': `Bearer ${this._password}`,
             },
         });
     }
@@ -70,7 +74,7 @@ export class Api {
         return this._request(url, {
             method: 'POST',
             headers: {
-                authorization: this._password,
+                'Authorization': `Bearer ${this._password}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body || {})
@@ -81,7 +85,7 @@ export class Api {
         return this._request(url, {
             method: 'PATCH',
             headers: {
-                authorization: this._password,
+                'Authorization': `Bearer ${this._password}`,
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(body || {})
@@ -108,5 +112,5 @@ export class Api {
     }
 }
 
-export const api = new Api('https://mesto.nomoreparties.co/v1/cohort-20', 'c0ebb0ed-e6f7-4466-b18b-32ea730e34e3');
+export const api = new Api('https://api.mesto.plekhanov.nomoredomains.club/', 'c0ebb0ed-e6f7-4466-b18b-32ea730e34e3');
 
