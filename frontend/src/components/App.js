@@ -141,6 +141,7 @@ const App = () => {
                     .then((res) => {
                         if (res) {
                             setUserEmail(res.data.email);
+                            api.setPassword(res.token);
                         };
                         setLoggedIn(true);
                         history.push("/");
@@ -156,14 +157,14 @@ const App = () => {
         setSelectedCard(null);
         setInfoTooltip(false);
     }
+    
+    useEffect(() => {
+        tokenCheck();
+    });
 
     useEffect(() => {
         handleUserData();
     }, [])
-
-    useEffect(() => {
-        tokenCheck();
-    });
 
     useEffect(() => {
         api.getCards()
