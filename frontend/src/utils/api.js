@@ -112,5 +112,5 @@ export class Api {
     }
 }
 
-export const api = new Api('https://api.mesto.plekhanov.nomoredomains.club/', 'c0ebb0ed-e6f7-4466-b18b-32ea730e34e3');
+export const api = new Api('https://api.mesto.plekhanov.nomoredomains.club', 'c0ebb0ed-e6f7-4466-b18b-32ea730e34e3');
 
