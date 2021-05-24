@@ -119,7 +119,6 @@ const App = () => {
                     setLoggedIn(true);
                     setUserEmail(email);
                     localStorage.setItem('jwt', res.token);
-                    api.setPassword(res.token);
                     history.push('/');
                 } else {
                     setInfoTooltip(true);
@@ -141,7 +140,6 @@ const App = () => {
                     .then((res) => {
                         if (res) {
                             setUserEmail(res.data.email);
-                            api.setPassword(res.token);
                         };
                         setLoggedIn(true);
                         history.push("/");

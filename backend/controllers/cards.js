@@ -22,7 +22,7 @@ module.exports.createCard = (req, res, next) => {
 module.exports.deleteCard = (req, res, next) => {
   Card.findById(req.params.id)
     .orFail(() => {
-      throw new Error('invalidUserId');
+      throw new Error('NotFound');
     })
     .then((data) => {
       if (data.owner._id.toString() !== req.user._id.toString()) {
@@ -36,7 +36,11 @@ module.exports.deleteCard = (req, res, next) => {
         .catch(next);
     })
     .catch((err) => {
-      throw new NotFoundError(err.message);
+      if (err.message === 'NotFound') {
+        throw new NotFoundError(err.message);
+      }
+
+      next(err);
     })
     .catch(next);
 };

@@ -15,7 +15,6 @@ const {
 } = require('../middlewares/validation');
 
 users.get('/', getUsers);
-users.post('/', createUser);
 users.get('/me', getUserInfo);
 users.get('/:id', idValidation, getUser);
 users.patch('/me', userInfoValidation, updateUserInfo);

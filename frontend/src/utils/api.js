@@ -1,11 +1,6 @@
 export class Api {
-    constructor(url, password) {
-        this._password = password;
+    constructor(url) {
         this._url = url;
-    }
-
-    setPassword(password) {
-        this._password = password;
     }
 
     setUserInfo(name, about) {
@@ -53,56 +48,43 @@ export class Api {
     }
 
     _deleteRequest(url) {
-        return this._request(url, {
-            method: 'DELETE',
-            headers: {
-                'Authorization': `Bearer ${this._password}`,
-            },
-        });
+        return this._request(url, 'DELETE', {});
     }
 
     _putRequest(url) {
-        return this._request(url, {
-            method: 'PUT',
-            headers: {
-                'Authorization': `Bearer ${this._password}`,
-            },
-        });
+        return this._request(url, 'PUT', {});
     }
 
     _postRequest(url, body) {
-        return this._request(url, {
-            method: 'POST',
-            headers: {
-                'Authorization': `Bearer ${this._password}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body || {})
-        });
+        return this._request(url, 'POST', body);
     }
 
     _patchRequest(url, body) {
-        return this._request(url, {
-            method: 'PATCH',
-            headers: {
-                'Authorization': `Bearer ${this._password}`,
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(body || {})
-        });
+        return this._request(url, 'PATCH', body);
     }
 
     _getRequest(url) {
-        return this._request(url, {
-            method: 'GET',
-            headers: {
-                authorization: this._password
-            }
-        });
+        return this._request(url, 'GET', {});
     }
 
-    _request(url, options) {
-        return fetch(`${this._url}${url}`, options)
+    _headers() {
+        return {
+            authorization: `Bearer ${localStorage.getItem('jwt')}`,
+            'Content-Type': 'application/json'
+        }
+    }
+
+    _request(url, method, body) {
+        const option = {
+            method: method,
+            body: JSON.stringify(body || {}),
+            headers: {
+                authorization: `Bearer ${localStorage.getItem('jwt')}`,
+                'Content-Type': 'application/json'
+            },
+        };
+
+        return fetch(`${this._url}${url}`, option)
             .then((res) => {
                 if (res.ok) {
                     return res.json();
@@ -112,5 +94,5 @@ export class Api {
     }
 }
 
-export const api = new Api('https://api.mesto.plekhanov.nomoredomains.club', 'c0ebb0ed-e6f7-4466-b18b-32ea730e34e3');
+export const api = new Api('https://api.mesto.plekhanov.nomoredomains.club');
 
