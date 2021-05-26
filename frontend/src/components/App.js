@@ -139,10 +139,17 @@ const App = () => {
                 auth.getContent(token)
                     .then((res) => {
                         if (res) {
-                            setUserEmail(res.data.email);
+                            setCurrentUser(res);
+                            setUserEmail(res.email);
                         };
                         setLoggedIn(true);
                         history.push("/");
+                        api.getCards()
+                            .then((data) => {
+                                console.log(data);
+                                setCards([...data.data]);
+                            })
+                            .catch((err) => {console.log(err)});
                     })
             }
         }
@@ -158,29 +165,7 @@ const App = () => {
     
     useEffect(() => {
         tokenCheck();
-    });
-
-    useEffect(() => {
-        handleUserData();
-    }, [])
-
-    useEffect(() => {
-        api.getCards()
-            .then((data) => {
-                setCards([...data]);
-            })
-            .catch((err) => {console.log(err)});
-    }, [])
-
-    const handleUserData = () => {
-        api.getUserInfo()
-            .then((data) => {
-                setCurrentUser(data);
-            })
-            .catch((err) => {
-                console.log(`ошибка ${err}`);
-            })
-    }
+    }, []);
 
     return (
         <CurrentUserContext.Provider value={currentUser}>

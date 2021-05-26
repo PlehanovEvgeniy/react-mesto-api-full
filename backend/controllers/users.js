@@ -10,7 +10,7 @@ const { NODE_ENV, JWT_SECRET } = process.env;
 
 module.exports.getUsers = (req, res, next) => {
   User.find({})
-    .then((data) => res.status(200).send({ data }))
+    .then((data) => res.status(200).send(data))
     .catch(next);
 };
 
@@ -34,7 +34,7 @@ module.exports.getUser = (req, res, next) => {
     .orFail(() => {
       throw new Error('NotFound');
     })
-    .then((data) => res.status(200).send({ data }))
+    .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.message === 'NotFound') {
         throw new NotFoundError(err.message);
@@ -60,7 +60,7 @@ module.exports.createUser = (req, res, next) => {
     }))
     .then((user) => res
       .status(200)
-      .send({ data: { _id: user._id, email: user.email } }))
+      .send({ _id: user._id, email: user.email }))
     .catch((err) => {
       if (err.name === 'MongoError' || err.code === 11000) {
         throw new ConflictError('Пользователь с таким email уже существует');
@@ -85,7 +85,7 @@ module.exports.updateUserInfo = (req, res, next) => {
     .orFail(() => {
       throw new Error('invalidUserId');
     })
-    .then((data) => res.status(200).send({ data }))
+    .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         throw new BadRequestError('Введенные данные некорректны');
@@ -109,7 +109,7 @@ module.exports.updateAvatar = (req, res, next) => {
     .orFail(() => {
       throw new Error('invalidUserId');
     })
-    .then((data) => res.status(200).send({ data }))
+    .then((data) => res.status(200).send(data))
     .catch((err) => {
       if (err.name === 'ValidationError' || err.name === 'CastError') {
         throw new BadRequestError('Введенные данные некорректны');

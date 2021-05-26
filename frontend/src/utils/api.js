@@ -48,11 +48,11 @@ export class Api {
     }
 
     _deleteRequest(url) {
-        return this._request(url, 'DELETE', {});
+        return this._request(url, 'DELETE');
     }
 
     _putRequest(url) {
-        return this._request(url, 'PUT', {});
+        return this._request(url, 'PUT');
     }
 
     _postRequest(url, body) {
@@ -64,26 +64,32 @@ export class Api {
     }
 
     _getRequest(url) {
-        return this._request(url, 'GET', {});
+        return this._request(url, 'GET');
     }
 
-    _headers() {
-        return {
-            authorization: `Bearer ${localStorage.getItem('jwt')}`,
-            'Content-Type': 'application/json'
+    _headers(method) {
+        const headers = {
+          authorization: `Bearer ${localStorage.getItem('jwt')}`,
+        };
+      
+        if (method !== 'GET') {
+          headers['Content-Type'] = 'application/json';
         }
-    }
-
-    _request(url, method, body) {
+      
+        return headers;
+      }
+      
+      _request(url, method, body) {
         const option = {
             method: method,
-            body: JSON.stringify(body || {}),
-            headers: {
-                authorization: `Bearer ${localStorage.getItem('jwt')}`,
-                'Content-Type': 'application/json'
-            },
+            headers: this._headers(method),
         };
-
+        
+        if (body) {
+            option.body = JSON.stringify(body);
+        }
+        console.log(option)
+      
         return fetch(`${this._url}${url}`, option)
             .then((res) => {
                 if (res.ok) {
@@ -91,7 +97,7 @@ export class Api {
                 }
                 return Promise.reject(`Ошибка: ${res.status}`);
             })
-    }
+      }
 }
 
 export const api = new Api('https://api.mesto.plekhanov.nomoredomains.club');
