@@ -36,11 +36,11 @@ export class Api {
     }
 
     putLike(cardId) {
-        return this._putRequest(`/cards/likes/${cardId}`);
+        return this._putRequest(`/cards/${cardId}/likes`);
     }
 
     takeLike(cardId) {
-        return this._deleteRequest(`/cards/likes/${cardId}`);
+        return this._deleteRequest(`/cards/${cardId}/likes`);
     }
 
     changeLikeCardStatus(cardId,toggle) {
@@ -88,7 +88,6 @@ export class Api {
         if (body) {
             option.body = JSON.stringify(body);
         }
-        console.log(option)
       
         return fetch(`${this._url}${url}`, option)
             .then((res) => {
