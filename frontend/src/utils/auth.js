@@ -56,4 +56,5 @@ class Auth {
 }
 
 const auth = new Auth('https://api.mesto.plekhanov.nomoredomains.club');
+
 export default auth;
