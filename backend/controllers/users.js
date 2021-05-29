@@ -19,7 +19,7 @@ module.exports.getUserInfo = (req, res, next) => {
     .orFail(() => {
       throw new Error('Такого пользователя не существует');
     })
-    .then((user) => res.status(200).send( user ))
+    .then((user) => res.status(200).send(user))
     .catch((err) => {
       if (err.name === 'CastError') {
         throw new BadRequestError('Некорректный Id');

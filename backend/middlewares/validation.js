@@ -5,7 +5,7 @@ module.exports.idValidation = celebrate({
   params: Joi
     .object()
     .keys({
-      id: Joi.string().max(24).hex(),
+      id: Joi.string().length(24).hex(),
     }),
 });
 

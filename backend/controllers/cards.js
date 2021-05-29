@@ -40,6 +40,10 @@ module.exports.deleteCard = (req, res, next) => {
         throw new NotFoundError(err.message);
       }
 
+      if (err.name === 'CastError') {
+        throw new BadRequestError('Введенные данные некорректны');
+      }
+
       next(err);
     })
     .catch(next);
